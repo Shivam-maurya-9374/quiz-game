@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <title>Attractive Navbar</title>
+</head>
+<style>
+    /* General Reset */
+body, ul {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: linear-gradient(90deg, #4b6cb7, #182848);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.nav-links li a:hover {
+    color: #ffcc00;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 0.3rem;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    transition: all 0.3s;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background: #182848;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
+/* section ke liye */
+
+.about-section {
+    background: linear-gradient(135deg, #4b6cb7, #182848);
+    color: white;
+    padding: 4rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.about-container {
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+    
+}
+
+.about-content {
+    flex: 1;
+    padding: 1rem;
+    
+}
+
+.about-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #ffcc00;
+}
+
+.about-content h2 {
+    font-size: 1.8rem;
+    margin: 1.5rem 0 1rem;
+    color: #ffd700;
+}
+
+.about-content p {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.about-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.about-content ul li {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.about-content ul li i {
+    font-size: 1.2rem;
+    color: #ffcc00;
+    margin-right: 0.8rem;
+}
+
+.cta-button {
+    display: inline-block;
+    margin-top: 1.5rem;
+    background: #ffcc00;
+    color: #182848;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.2rem;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.cta-button:hover {
+    background: #ffd700;
+}
+
+/* About Image */
+.about-image {
+    flex: 1;
+    text-align: center;
+    
+}
+
+.about-image img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    height: 300px;
+    width: 500px;
+    margin-top: -400px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about-content {
+        padding: 0;
+    }
+
+    .cta-button {
+        margin: 1rem auto;
+    }
+}
+
+/* footar ke liye */
+
+body, ul, p, h3 {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Footer Styles */
+.footer {
+    background: linear-gradient(90deg, #182848, #4b6cb7);
+    color: white;
+    padding: 2rem 1rem;
+    position: relative;
+    text-align: center;
+   
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.footer-column {
+    flex: 1 1 300px;
+    margin: 1rem;
+    text-align: left;
+}
+
+.footer-column h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #ffcc00;
+}
+
+.footer-column p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-column ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+.footer-column ul li a i {
+    margin-right: 0.5rem;
+}
+
+.footer-column ul li a:hover {
+    color: #ffcc00;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.social-icon {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    background: #ffcc00;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.social-icon i {
+    margin-right: 0.5rem;
+}
+
+.social-icon:hover {
+    background: white;
+    color: #182848;
+}
+
+.footer-bottom {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ffcc00;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #182848;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+}
+
+.scroll-to-top:hover {
+    background: #4b6cb7;
+    color: white;
+}
+
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-column {
+        text-align: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+}
+
+
+
+</style>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="icons8-online-test-65.png">
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="congloging.html"><i class="fa-solid fa-person-walking-arrow-loop-left"></i></a></li>
+
+        </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+<!-- section ke  liye -->
+
+
+<section id="about" class="about-section">
+    <div class="about-container">
+        <div class="about-content">
+            <h1>About Our Quiz Game</h1>
+            <p>
+                Welcome to our Quiz Game – the ultimate platform to challenge your knowledge, have fun, and compete with friends. Whether you're a trivia enthusiast, a student looking to learn something new, or just want to test your brainpower, this game is perfect for you!
+            </p>
+            <h2>Why Play Our Quiz Game?</h2>
+            <ul>
+                <li><i class="fas fa-brain"></i> <strong>Boost Your Knowledge:</strong> Explore various categories, from science to history, and discover interesting facts.</li>
+                <li><i class="fas fa-gamepad"></i> <strong>Fun and Interactive:</strong> Enjoy a user-friendly interface with engaging gameplay that keeps you hooked.</li>
+                <li><i class="fas fa-trophy"></i> <strong>Compete and Win:</strong> Climb the leaderboard and earn rewards as you progress through challenging levels.</li>
+                <li><i class="fas fa-clock"></i> <strong>Timed Challenges:</strong> Answer questions before the clock runs out to earn bonus points!</li>
+                <li><i class="fas fa-users"></i> <strong>Play with Friends:</strong> Invite friends and family for a fun multiplayer quiz experience.</li>
+            </ul>
+            <h2>How It Works</h2>
+            <p>
+                Getting started is easy! Choose a category, start answering questions, and see how you rank among players worldwide. Unlock achievements and collect badges as you showcase your brilliance!
+            </p>
+            <a href="congquestion.html" class="cta-button">Play Now</a>
+        </div>
+        <div class="about-image">
+            <img src="icons8-online-test-78.png" alt="Quiz Game" />
+        </div>
+    </div>
+</section>
+
+<!-- footar ke liye -->
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <h3>About Us</h3>
+            <p>We are a leading company providing top-notch services to our clients worldwide. Your satisfaction is our priority.</p>
+        </div>
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="#services"><i class="fas fa-cogs"></i> Services</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i> Instagram</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 YourCompany. All Rights Reserved.</p>
+    </div>
+    <button class="scroll-to-top"><i class="fas fa-arrow-up"></i></button>
+</footer>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- script tage -->
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+
+hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+});
+
+
+// Scroll to Top Button
+const scrollToTopBtn = document.querySelector('.scroll-to-top');
+
+// Show/Hide Scroll Button on Scroll
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+        scrollToTopBtn.style.display = 'flex';
+    } else {
+        scrollToTopBtn.style.display = 'none';
+    }
+});
+
+// Scroll to Top on Button Click
+scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+
+    </script>
+</body>
+</h

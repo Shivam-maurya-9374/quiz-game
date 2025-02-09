@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(135deg, #74ebd5, #9face6);
+        color: white;
+        overflow: hidden;
+        animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .quiz-container {
+        width: 90%;
+        max-width: 500px;
+        background: rgba(255, 255, 255, 0.9);
+        color: #333;
+        border-radius: 12px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        padding: 2rem;
+        text-align: center;
+        backdrop-filter: blur(10px);
+    }
+
+    .quiz-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .quiz-header h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #333;
+        margin: 0;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .timer {
+        font-size: 1.4rem;
+        color: #ff7f50;
+        font-weight: bold;
+        margin-top: 1rem;
+    }
+
+    .quiz-content {
+        margin-bottom: 1.5rem;
+    }
+
+    #answers {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    #answers li {
+        background: #4b6cb7;
+        color: white;
+        padding: 0.8rem 1rem;
+        margin: 0.5rem 0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s;
+    }
+
+    #answers li:hover {
+        background: #182848;
+        transform: scale(1.05);
+    }
+
+    #next-button, #play-again-button {
+        background: #4b6cb7;
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: background 0.3s ease, transform 0.2s;
+    }
+
+    #next-button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
+
+    #next-button:hover:enabled, #play-again-button:hover {
+        background: #182848;
+        transform: scale(1.05);
+    }
+
+    .score {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 1rem;
+        color: #ff7f50;
+    }
+
+    #play-again-button {
+        display: none;
+        margin-top: 1.5rem;
+        background: #32cd32;
+    }
+
+    #play-again-button:hover {
+        background: #228b22;
+    }
+
+    .quiz-footer {
+        margin-top: 2rem;
+    }
+
+    .reward-message {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #32cd32;
+        margin-top: 1.5rem;
+        display: none;
+    }
+</style>
+<body>
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <h1>Simple Quiz Game</h1>
+            <div class="timer">Time Left: <span id="time">10</span>s</div>
+        </div>
+        <div class="quiz-content">
+            <p id="question">Question will appear here...</p>
+            <ul id="answers">
+                <!-- Options will be dynamically loaded here -->
+            </ul>
+        </div>
+        <div class="quiz-footer">
+            <button id="next-button" disabled>Next</button>
+            <button id="play-again-button">Play Again</button>
+            <p class="score">Score: <span id="score">0</span></p>
+            <p id="reward-message" class="reward-message">You earned a bonus! Keep it up!</p>
+        </div>
+    </div>
+    <script>
+        const questions = [
+            {
+                question: "What is the capital of France?",
+                options: ["Paris", "London", "Berlin", "Madrid"],
+                answer: "Paris",
+            },
+            {
+                question: "What is 2 + 2?",
+                options: ["3", "4", "5", "6"],
+                answer: "4",
+            },
+            {
+                question: "Which language is used for web development?",
+                options: ["Python", "JavaScript", "C++", "Java"],
+                answer: "JavaScript",
+            },
+        ];
+
+        let currentQuestion = 0;
+        let timeLeft = 10;
+        let score = 0;
+        let streak = 0; // Track consecutive correct answers
+        let timerInterval;
+
+        // DOM Elements
+        const questionEl = document.getElementById("question");
+        const answersEl = document.getElementById("answers");
+        const timerEl = document.getElementById("time");
+        const nextButton = document.getElementById("next-button");
+        const scoreEl = document.getElementById("score");
+        const playAgainButton = document.getElementById("play-again-button");
+        const rewardMessageEl = document.getElementById("reward-message");
+
+        // Load Question
+        function loadQuestion() {
+            const current = questions[currentQuestion];
+            questionEl.textContent = current.question;
+            answersEl.innerHTML = "";
+            current.options.forEach((option) => {
+                const li = document.createElement("li");
+                li.textContent = option;
+                li.addEventListener("click", () => selectAnswer(option));
+                answersEl.appendChild(li);
+            });
+            nextButton.disabled = true;
+            resetTimer();
+        }
+
+        // Select Answer
+        function selectAnswer(selectedOption) {
+            const correctAnswer = questions[currentQuestion].answer;
+            const options = document.querySelectorAll("#answers li");
+            options.forEach((option) => {
+                if (option.textContent === correctAnswer) {
+                    option.style.backgroundColor = "green";
+                } else {
+                    option.style.backgroundColor = "red";
+                }
+                option.style.pointerEvents = "none";
+            });
+            if (selectedOption === correctAnswer) {
+                score++; // Increment score for correct answer
+                streak++; // Increment streak for correct answers
+                console.log("Correct!");
+                if (streak >= 2) {
+                    score += 2; // Reward bonus for streak
+                    rewardMessageEl.style.display = "block"; // Show reward message
+                }
+            } else {
+                streak = 0; // Reset streak on incorrect answer
+                console.log("Wrong!");
+            }
+            scoreEl.textContent = score; // Update score on UI
+            nextButton.disabled = false;
+            clearInterval(timerInterval);
+        }
+
+        // Timer Functionality
+        function resetTimer() {
+            timeLeft = 10;
+            timerEl.textContent = timeLeft;
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    nextButton.disabled = false;
+                    selectAnswer(null); // Show the correct answer automatically
+                }
+            }, 1000);
+        }
+
+        // Next Question
+        nextButton.addEventListener("click", () => {
+            currentQuestion++;
+            rewardMessageEl.style.display = "none"; // Hide reward message for next question
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                questionEl.textContent = "Quiz Over! Thanks for playing.";
+                answersEl.innerHTML = "";
+                nextButton.style.display = "none";
+                playAgainButton.style.display = "inline-block"; // Show "Play Again" button
+                scoreEl.textContent = `Final Score: ${score}`;
+                clearInterval(timerInterval);
+            }
+        });
+
+        // Play Again Button
+        playAgainButton.addEventListener("click", () => {
+            currentQuestion = 0;
+            score = 0;
+            streak = 0;
+            scoreEl.textContent = score;
+            nextButton.style.display = "inline-block";
+            playAgainButton.style.display = "none";
+            loadQuestion();
+        });
+
+        // Start the Quiz
+        loadQuestion();
+    </script>
+</body>
+</html>
